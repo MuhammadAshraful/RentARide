@@ -1,5 +1,7 @@
+import 'package:auto/MVC/View/change_password.dart';
+import 'package:auto/MVC/View/loginPage.dart';
 import 'package:auto/pages/seller/add_new_car.dart';
-import 'package:auto/pages/buyer/views/car_list_for_order.dart';
+
 import 'package:auto/pages/seller/my_car_list_page.dart';
 import 'package:auto/pages/seller/car_order_Recieve_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -18,15 +20,26 @@ class SellerHome extends StatefulWidget {
 class _SellerHomeState extends State<SellerHome> {
   bool buttonColor1 = false;
   bool buttonColor2 = false;
+
   final auth = FirebaseAuth.instance;
+
   final TextEditingController search = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.purpleAccent,
-          automaticallyImplyLeading: false,
-          title: Text("Seller DashBoard"),
+          backgroundColor: Colors.amber,
+          // Add the Drawer icon button
+          leading: Builder(
+            builder: (context) => IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () => Scaffold.of(context).openDrawer(),
+            ),
+          ),
+          title: Text(
+            "Seller DashBoard",
+            style: TextStyle(color: Colors.black),
+          ),
           centerTitle: true,
         ),
         drawer: Drawer(
@@ -35,11 +48,28 @@ class _SellerHomeState extends State<SellerHome> {
               InkWell(
                 onTap: () async {
                   await FirebaseAuth.instance.signOut();
+                  Get.to(LoginPage());
                 },
                 child: Container(
-                  child: Text("Log Out",style: TextStyle(fontSize: 15.sp, color: Colors.black),),
+                  child: Text(
+                    "Log Out",
+                    style: TextStyle(fontSize: 15.sp, color: Colors.black),
+                  ),
                 ),
-              )
+              ),
+
+              InkWell(
+                onTap: () {
+                  Get.to(ChangePasswordScreen());
+                },
+                child: Container(
+                  child: Text(
+                    "Change Password",
+                    style: TextStyle(fontSize: 15.sp, color: Colors.black),
+                  ),
+                ),
+              ),
+              // Add more Drawer items here
             ],
           ),
         ),

@@ -1,11 +1,7 @@
-import 'package:auto/pages/seller/my_car_list_page.dart';
-import 'package:auto/pages/home/home.dart';
-import 'package:auto/pages/loginPage.dart';
-import 'package:auto/pages/verify_email.dart';
+import 'package:auto/MVC/View/loginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
@@ -36,6 +32,6 @@ class MyApp extends StatelessWidget {
             home: child,
           );
         },
-        child: LoginPage());
+        child: const LoginPage());
   }
 }

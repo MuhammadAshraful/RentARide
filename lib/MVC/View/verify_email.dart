@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
+import '../Controller/verifyEmail_controller.dart';
+
 class VerifyEmail extends StatefulWidget {
   const VerifyEmail({super.key});
 
@@ -11,6 +13,8 @@ class VerifyEmail extends StatefulWidget {
 }
 
 class _VerifyEmailState extends State<VerifyEmail> {
+  final EmailVerificationController _controller = EmailVerificationController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,8 +37,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
               color: Colors.black,
               child: TextButton(
                 onPressed: () async {
-                  final user = FirebaseAuth.instance.currentUser;
-                  await user?.sendEmailVerification();
+                  _controller.handleSendEmailVerification();
                 },
                 child: const Text(
                   'Send email verification',

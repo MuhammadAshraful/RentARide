@@ -1,11 +1,12 @@
 import 'package:auto/pages/buyer/views/al_ready_order_carList.dart';
 import 'package:auto/pages/buyer/views/car_list_for_order.dart';
-import 'package:auto/pages/loginPage.dart';
+import 'package:auto/MVC/View/loginPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:auto/MVC/View/change_password.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -23,6 +24,12 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          leading: Builder(
+            builder: (context) => IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () => Scaffold.of(context).openDrawer(),
+            ),
+          ),
           backgroundColor: Colors.amber,
           automaticallyImplyLeading: false,
           title: Container(
@@ -36,23 +43,37 @@ class _HomePageState extends State<HomePage> {
               decoration: InputDecoration(
                 border: InputBorder.none,
                 suffixIcon: Icon(Icons.search),
-                hintText: "Search for a services",
+                hintText: "Search for a car",
               ),
             ),
           ),
         ),
         drawer: Drawer(
-          backgroundColor: Colors.black,
           child: ListView(
             children: [
               InkWell(
                 onTap: () async {
                   await FirebaseAuth.instance.signOut();
+                  Get.to(LoginPage());
                 },
                 child: Container(
-                  child: Text("Log Out"),
+                  child: Text(
+                    "Log Out",
+                    style: TextStyle(fontSize: 15.sp, color: Colors.black),
+                  ),
                 ),
-              )
+              ),
+              InkWell(
+                onTap: () {
+                  Get.to(ChangePasswordScreen());
+                },
+                child: Container(
+                  child: Text(
+                    "Change Password",
+                    style: TextStyle(fontSize: 15.sp, color: Colors.black),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

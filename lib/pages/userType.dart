@@ -20,19 +20,23 @@ class Home extends StatelessWidget {
           if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           }
+
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
               return Center(child: CircularProgressIndicator());
             default:
-              return checkRole(snapshot.data!.docs[0].get("userType"));
+              if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
+                return checkRole(snapshot.data!.docs[0].get("userType"));
+              } else {
+                return Text("No data available");
+              }
           }
         },
       ),
     );
   }
 
-  checkRole( value) {
-  
+  checkRole(value) {
     print(value);
     if (value == 'seller') {
       return SellerHome();

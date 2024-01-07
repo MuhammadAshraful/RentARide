@@ -3,13 +3,16 @@ import 'dart:convert';
 import 'package:auto/forget_password.dart';
 import 'package:auto/pages/seller/sellerHome.dart';
 import 'package:auto/pages/home/home.dart';
-import 'package:auto/pages/registration_page.dart';
+import 'package:auto/MVC/View/registration_page.dart';
 import 'package:auto/pages/userType.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
+import '../Controller/login_controller.dart';
+import '../Model/login_model.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -20,6 +23,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _auth = FirebaseAuth.instance;
+  final LoginController _controller = LoginController();
 
   late final TextEditingController email;
   late final TextEditingController password;
@@ -93,10 +97,7 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(height: 40),
             GestureDetector(
               onTap: () {
-                login(
-                    email: email.text.toString(),
-                    password: password.text.toString());
-                print("login");
+                _controller.handleLogin(email.text, password.text);
               },
               child: Container(
                 alignment: Alignment.center,
@@ -153,53 +154,5 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
-  }
-
-  var uId;
-  login({
-    required String email,
-    required String password,
-  }) async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-    User? user;
-
-    UserCredential userCredential = await auth.signInWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
-
-    user = userCredential.user;
-    var token = user!.getIdToken();
-
-    await user.reload();
-
-    if (user.emailVerified == true) {
-      // User is verified, continue with your app logic
-      try {
-        var uId = user.uid;
-        if (uId != null) {
-          Get.to(Home(
-            user: user,
-          ));
-        }
-
-        //   userList = querySnapshot.docs.map((e) => kako.User.fromMap(e.data())).toList();
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'user-not-found') {
-          print('No user found for that email.');
-          Get.snackbar("Email", "No user found for that email");
-        } else if (e.code == 'wrong-password') {
-          print('Wrong password provided.');
-          Get.snackbar("Password", "Wrong password provided.");
-        }
-      }
-    } else {
-      print(user);
-      Get.snackbar('Email not verified',
-          'Check your email and click the link to activate your account',
-          snackPosition: SnackPosition.BOTTOM);
-    }
-
-    return user;
   }
 }

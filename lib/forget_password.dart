@@ -10,50 +10,54 @@ class ForgetPassword extends StatefulWidget {
 }
 
 class _ForgetPasswordState extends State<ForgetPassword> {
-    final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController email = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Forget Password"),),
+      appBar: AppBar(
+        title: Text(
+          "Forget Password",
+          style: TextStyle(color: Colors.black),
+        ),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 20.w),
-              child: TextFormField(
-                  controller: email,
-                  decoration: InputDecoration(
-                    labelText: "Email",
-                    labelStyle: TextStyle(fontSize: 18),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: Colors.grey),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.r),
-                      borderSide: BorderSide(color: Colors.blue),
-                    ),
-                  ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 20.w),
+            child: TextFormField(
+              controller: email,
+              decoration: InputDecoration(
+                labelText: "Email",
+                labelStyle: TextStyle(fontSize: 18),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(color: Colors.grey),
                 ),
-            ),
-
-              SizedBox(height: 20,), 
-
-   Container(
-                width: 200.w,
-                height: 50,
-                
-                child: ElevatedButton(
-                  onPressed: () {
-                 _auth.sendPasswordResetEmail(email: email.text.toString()); 
-                  },
-                  child: Text(
-                    "Forget",
-                    style: TextStyle(fontSize: 18),
-                  ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.r),
+                  borderSide: BorderSide(color: Colors.blue),
                 ),
               ),
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            width: 200.w,
+            height: 50,
+            child: ElevatedButton(
+              onPressed: () {
+                _auth.sendPasswordResetEmail(email: email.text.toString());
+              },
+              child: Text(
+                "Forget",
+                style: TextStyle(fontSize: 18),
+              ),
+            ),
+          ),
         ],
       ),
     );

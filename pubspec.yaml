@@ -18,7 +18,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_screenutil: ^5.7.0
   firebase_core: 
-  cloud_firestore: 
+  cloud_firestore: ^4.13.6 
   firebase_auth: ^4.6.3
   path_provider: ^2.0.15
   image_picker: ^1.0.0

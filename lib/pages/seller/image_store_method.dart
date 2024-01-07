@@ -9,7 +9,7 @@ final FirebaseStorage _storage = FirebaseStorage.instance;
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
 class StoreData {
-  Future<String> uploadImageToStorage(String childName,Uint8List file) async {
+  Future<String> uploadImageToStorage(String childName, Uint8List file) async {
     Reference ref = _storage.ref().child(childName);
     UploadTask uploadTask = ref.putData(file);
     TaskSnapshot snapshot = await uploadTask;
@@ -17,8 +17,7 @@ class StoreData {
     return downloadUrl;
   }
 
- 
-    addNewCar({
+  addNewCar({
     required String carname,
     required String model,
     required String rate,
@@ -29,21 +28,20 @@ class StoreData {
     User? user;
     try {
       user = auth.currentUser;
-   String imageUrl = await uploadImageToStorage('cars', file);
+      String imageUrl = await uploadImageToStorage('cars', file);
       if (user!.uid != null) {
         var id = user.uid.toString();
         FirebaseFirestore.instance.collection('mycarList').doc(id).set({
-           
           'car_name': carname,
           'model': model,
           'rate': rate,
           "location": location,
-           "id":id, 
+          "id": id,
           "userId": user.uid.toString(),
-          'url':imageUrl.toString()
+          'url': imageUrl.toString()
         });
 
-        Get.snackbar("Message", "Car Successfully stored"); 
+        Get.snackbar("Message", "Car Successfully stored");
       }
     } on FirebaseAuthException catch (e) {
     } catch (e) {

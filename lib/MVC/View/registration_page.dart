@@ -1,12 +1,11 @@
-import 'dart:async';
-
-import 'package:auto/pages/loginPage.dart';
-import 'package:auto/pages/verify_email.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+import '../Controller/register_controller.dart';
+import '../Model/register_model.dart';
 
 class RegistrationPage extends StatefulWidget {
   @override
@@ -15,11 +14,12 @@ class RegistrationPage extends StatefulWidget {
 
 class _RegistrationPageState extends State<RegistrationPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final RegistrationController _controller = RegistrationController();
   late final TextEditingController email;
   late final TextEditingController password;
   late final TextEditingController mobile;
   late final TextEditingController name;
-  late final TextEditingController userType;
+  final userType = "Buyer";
 
   @override
   void initState() {
@@ -27,7 +27,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     password = TextEditingController();
     mobile = TextEditingController();
     name = TextEditingController();
-    userType = TextEditingController();
+
     super.initState();
   }
 
@@ -37,7 +37,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     password.dispose();
     mobile.dispose();
     name.dispose();
-    userType.dispose();
+
     super.dispose();
   }
 
@@ -91,21 +91,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 ),
               ),
               SizedBox(height: 15.h),
-              TextFormField(
-                controller: userType,
-                decoration: InputDecoration(
-                  labelText: "User Type: Seller/Buyer",
-                  labelStyle: TextStyle(fontSize: 18),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.r),
-                    borderSide: BorderSide(color: Colors.grey),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.blue),
-                  ),
-                ),
-              ),
               SizedBox(height: 20),
               TextFormField(
                 controller: mobile,
@@ -145,12 +130,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () {
-                    register(
-                        name: name.text.toString(),
-                        mobile: mobile.text.toString(),
-                        email: email.text.toString(),
-                        password: password.text.toString(),
-                        userType: userType.text.toString());
+                    _controller.userModel.name = name.text;
+                    _controller.userModel.password = password.text;
+                    _controller.userModel.email = email.text;
+                    _controller.userModel.userType = userType;
+                    _controller.userModel.mobile = mobile.text;
+                    _handleRegistration();
                   },
                   child: Text(
                     "REGISTER",
@@ -165,47 +150,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
     );
   }
 
-  register({
-    required String name,
-    required String email,
-    required String password,
-    required String mobile,
-    required String userType,
-  }) async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-    User? user;
-
-    try {
-      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      User? user2 = auth.currentUser;
-      await user2?.sendEmailVerification();
-      user = userCredential.user;
-      // ignore: deprecated_member_use
-      await user!.updateProfile(displayName: name);
-      await user.reload();
-      user = auth.currentUser;
-      if (user!.uid != null) {
-        FirebaseFirestore.instance.collection('user').add({
-          'name': name,
-          'mobile': mobile,
-          'userType': userType,
-          "id": user.uid.toString()
-        });
-        Get.snackbar("Registration Successfully Done", "");
-        Get.to(VerifyEmail());
-      }
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }
-    } catch (e) {
-      print(e);
+  Future<void> _handleRegistration() async {
+    bool result = await _controller.handleRegistration();
+    if (result == true) {
+      Get.snackbar("Registration Successfully Done", "");
     }
-    return user;
   }
 }
