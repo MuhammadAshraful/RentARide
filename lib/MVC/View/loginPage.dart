@@ -45,108 +45,133 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.amber,
+    return MaterialApp(
+      home: Scaffold(
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              margin: EdgeInsets.only(left: 20, right: 20),
-              height: 50.h,
-              child: TextFormField(
-                controller: email,
-                decoration: InputDecoration(
-                  labelText: "E-mail",
-                  labelStyle: TextStyle(fontSize: 18),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.grey),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.blue),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 20.h),
-            Container(
-              height: 50.h,
-              margin: EdgeInsets.only(left: 20, right: 20),
-              child: TextFormField(
-                controller: password,
-                obscureText: true,
-                decoration: InputDecoration(
-                  labelText: "Password",
-                  labelStyle: TextStyle(
-                    fontSize: 18,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.grey),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.blue),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 40),
-            GestureDetector(
-              onTap: () {
-                _controller.handleLogin(email.text, password.text);
-              },
+            Expanded(
               child: Container(
-                alignment: Alignment.center,
-                width: 150.w,
-                height: 45.h,
                 decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(30.r)),
-                child: Text(
-                  "Log In",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color(0xf9d423).withOpacity(1),
+                      Color(0xff4e50).withOpacity(1),
+                    ],
                   ),
+                  borderRadius:
+                      BorderRadius.vertical(bottom: Radius.circular(0)),
                 ),
-              ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            InkWell(
-              onTap: () {
-                Get.to(ForgetPassword());
-              },
-              child: Container(
-                child: Text(
-                  "Forget Password",
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
-            InkWell(
-              onTap: () {
-                Get.to(RegistrationPage());
-              },
-              child: Container(
-                child: Text(
-                  "Don't have account? Click",
-                  style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        'assets/logo4.png',
+                        height: 300.h, // Adjust the height as needed
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 20, right: 20),
+                        height: 50.h,
+                        child: TextFormField(
+                          controller: email,
+                          decoration: InputDecoration(
+                            labelText: "E-mail",
+                            prefixIcon: Icon(Icons.mail),
+                            labelStyle: TextStyle(fontSize: 18),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide(color: Colors.black),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide(color: Colors.blue),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20.h),
+                      Container(
+                        height: 50.h,
+                        margin: EdgeInsets.only(left: 20, right: 20),
+                        child: TextFormField(
+                          controller: password,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            labelText: "Password",
+                            prefixIcon: Icon(Icons.vpn_key),
+                            labelStyle: TextStyle(
+                              fontSize: 18,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide(color: Colors.black),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide(color: Colors.blue),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 40),
+                      GestureDetector(
+                        onTap: () {
+                          _controller.handleLogin(email.text, password.text);
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          width: 150.w,
+                          height: 45.h,
+                          decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(30.r)),
+                          child: Text(
+                            "Log In",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Get.to(ForgetPassword());
+                        },
+                        child: Container(
+                          child: Text(
+                            "Forgot Password?",
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Get.to(RegistrationPage());
+                        },
+                        child: Container(
+                          child: Text(
+                            "Don't have account? Click here",
+                            style: TextStyle(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

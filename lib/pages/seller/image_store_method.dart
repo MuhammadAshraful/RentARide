@@ -1,9 +1,11 @@
+import 'dart:io';
 import 'dart:typed_data';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 final FirebaseStorage _storage = FirebaseStorage.instance;
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -18,7 +20,7 @@ class StoreData {
   }
 
   addNewCar({
-    required String carname,
+    required String carName,
     required String model,
     required String rate,
     required String location,
@@ -26,26 +28,35 @@ class StoreData {
   }) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
+
     try {
+      String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
       user = auth.currentUser;
-      String imageUrl = await uploadImageToStorage('cars', file);
+      String imageUrl = await uploadImageToStorage(uniqueFileName, file);
+
       if (user!.uid != null) {
         var id = user.uid.toString();
-        FirebaseFirestore.instance.collection('mycarList').doc(id).set({
-          'car_name': carname,
+        FirebaseFirestore.instance.collection('mycarList').add({
+          'car_name': carName,
           'model': model,
           'rate': rate,
           "location": location,
           "id": id,
           "userId": user.uid.toString(),
-          'url': imageUrl.toString()
+          'url': imageUrl, // No need for toString()
         });
 
         Get.snackbar("Message", "Car Successfully stored");
       }
     } on FirebaseAuthException catch (e) {
+      // Handle authentication errors
+      print("Authentication error: ${e.message}");
+    } on FirebaseException catch (e) {
+      // Handle other Firebase errors
+      print("Firebase error: ${e.message}");
     } catch (e) {
-      print(e);
+      // Handle general errors
+      print("Unexpected error: ${e.toString()}");
     }
     return user;
   }

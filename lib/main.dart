@@ -1,8 +1,17 @@
 import 'package:auto/MVC/View/loginPage.dart';
+import 'package:auto/pages/seller/add_new_car.dart';
+import 'package:auto/pages/seller/sellerHome.dart';
+import 'package:auto/pages/seller/view_users.dart';
+import 'package:auto/test/login_test.dart';
+import 'package:auto/test/registerTest.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
+
+import 'MVC/View/change_password.dart';
+import 'MVC/View/registration_page.dart';
+import 'MVC/View/verify_email.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,6 +41,6 @@ class MyApp extends StatelessWidget {
             home: child,
           );
         },
-        child: const LoginPage());
+        child: LoginPage());
   }
 }

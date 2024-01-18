@@ -12,12 +12,15 @@ class LoginController {
       EmailVerificationController();
 
   Future<void> handleLogin(String email, String password) async {
+    //   User? user = FirebaseAuth.instance.currentUser;
+    // await user?.reload();
+    // print(user);
     User user = await _loginModel.login(email: email, password: password);
-
     // Handle UI updates based on login result (e.g., show a message, navigate to the next screen)
-    if (user.emailVerified == true) {
+    if (user.emailVerified) {
       // User is verified, continue with your app logic
       try {
+        //   User user = await _loginModel.login(email: email, password: password);
         var uId = user.uid;
         if (uId != null) {
           Get.to(Home(

@@ -64,7 +64,8 @@ class _AlReadyCarOrderListState extends State<AlReadyCarOrderList> {
                           Container(
                             height: 100.h,
                             width: 80.w,
-                            child: Image.asset("assets/car1.png"),
+                            child: Image.network(
+                                "${snapshot.data!.docs[index].get("url").toString()}"),
                           ),
                           SizedBox(
                             width: 15.w,

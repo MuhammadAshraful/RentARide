@@ -20,7 +20,7 @@ class LoginModel {
     user = userCredential.user;
     var token = user!.getIdToken();
 
-    await user.reload();
+    //
 
     return user;
   }

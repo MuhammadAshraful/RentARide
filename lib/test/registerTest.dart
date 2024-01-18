@@ -5,14 +5,15 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../Controller/register_controller.dart';
+import '../MVC/Controller/register_controller.dart';
 import '../Model/register_model.dart';
 
-class RegistrationPage extends StatefulWidget {
+class RegistrationPageo extends StatefulWidget {
   @override
-  State<RegistrationPage> createState() => _RegistrationPageState();
+  State<RegistrationPageo> createState() => _RegistrationPageoState();
 }
 
-class _RegistrationPageState extends State<RegistrationPage> {
+class _RegistrationPageoState extends State<RegistrationPageo> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final RegistrationController _controller = RegistrationController();
   late final TextEditingController email;
@@ -43,53 +44,54 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Column(
-          children: [
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Color(0xf9d423).withOpacity(1),
-                      Color(0xff4e50).withOpacity(1),
-                    ],
-                  ),
-                  borderRadius:
-                      BorderRadius.vertical(bottom: Radius.circular(0)),
+    return Scaffold(
+      body: Stack(
+        children: [
+          Scaffold(
+            backgroundColor: Colors.amber,
+            body: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 60.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Image.asset(
+                      'assets/logo4.png',
+                      height: 100.h, // Adjust the height as needed
+                    ),
+                    Text(
+                      "Register",
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Image.asset(
-                        'assets/logo4.png',
-                        height: 100.h, // Adjust the height as needed
-                      ),
-                      Text(
-                        "Register",
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 50),
-                      Container(
-                        constraints: BoxConstraints(
-                          maxWidth: 350, // Set the maximum width
-                        ),
-                        child: TextFormField(
+              ),
+            ),
+          ),
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    color: Color(0xFF00FF00),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 30),
+                        TextFormField(
                           controller: name,
                           decoration: InputDecoration(
                             labelText: "Name",
-                            prefixIcon: Icon(Icons.person),
                             labelStyle: TextStyle(fontSize: 18),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(color: Colors.black),
+                              borderSide: BorderSide(color: Colors.grey),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
@@ -97,21 +99,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 40),
-                      Container(
-                        constraints: BoxConstraints(
-                          maxWidth: 350, // Set the maximum width
-                        ),
-                        child: TextFormField(
+                        SizedBox(height: 20),
+                        TextFormField(
                           controller: email,
                           decoration: InputDecoration(
                             labelText: "Email",
                             labelStyle: TextStyle(fontSize: 18),
-                            prefixIcon: Icon(Icons.email),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(color: Colors.black),
+                              borderSide: BorderSide(color: Colors.grey),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.r),
@@ -119,21 +115,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 40),
-                      Container(
-                        constraints: BoxConstraints(
-                          maxWidth: 350, // Set the maximum width
-                        ),
-                        child: TextFormField(
+                        SizedBox(height: 15.h),
+                        SizedBox(height: 20),
+                        TextFormField(
                           controller: mobile,
                           decoration: InputDecoration(
                             labelText: "Mobile",
-                            prefixIcon: Icon(Icons.phone),
                             labelStyle: TextStyle(fontSize: 18),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(color: Colors.black),
+                              borderSide: BorderSide(color: Colors.grey),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
@@ -141,22 +132,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 40),
-                      Container(
-                        constraints: BoxConstraints(
-                          maxWidth: 350, // Set the maximum width
-                        ),
-                        child: TextFormField(
+                        SizedBox(height: 20.h),
+                        TextFormField(
                           controller: password,
                           obscureText: true,
                           decoration: InputDecoration(
                             labelText: "Password",
-                            prefixIcon: Icon(Icons.lock),
                             labelStyle: TextStyle(fontSize: 18),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(color: Colors.black),
+                              borderSide: BorderSide(color: Colors.grey),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
@@ -164,12 +149,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 50),
-                      Container(
-                        width: double.infinity,
-                        height: 50,
-                        child: Center(
+                        SizedBox(height: 40),
+                        Container(
+                          width: double.infinity,
+                          height: 50,
                           child: ElevatedButton(
                             onPressed: () {
                               _controller.userModel.name = name.text;
@@ -179,31 +162,22 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               _controller.userModel.mobile = mobile.text;
                               _handleRegistration();
                             },
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.black,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    30.0), // Set the border radius
-                              ),
-                              minimumSize: Size(
-                                  300, 48), // Set your desired background color
-                            ),
                             child: Text(
                               "REGISTER",
                               style: TextStyle(fontSize: 18),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                        //   height: 100, // Adjust the height as needed
+                      ], // color: Colors.amber,
+                    ), // Other properties of the container
                   ),
-                ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
-      // backgroundColor: Colors.amber,
     );
   }
 

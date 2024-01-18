@@ -4,6 +4,7 @@ import 'package:auto/pages/seller/add_new_car.dart';
 
 import 'package:auto/pages/seller/my_car_list_page.dart';
 import 'package:auto/pages/seller/car_order_Recieve_page.dart';
+import 'package:auto/pages/seller/view_users.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -65,6 +66,18 @@ class _SellerHomeState extends State<SellerHome> {
                 child: Container(
                   child: Text(
                     "Change Password",
+                    style: TextStyle(fontSize: 15.sp, color: Colors.black),
+                  ),
+                ),
+              ),
+
+              InkWell(
+                onTap: () {
+                  Get.to(ViewUsers());
+                },
+                child: Container(
+                  child: Text(
+                    "View Users",
                     style: TextStyle(fontSize: 15.sp, color: Colors.black),
                   ),
                 ),

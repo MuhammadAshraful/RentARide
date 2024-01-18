@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:auto/pages/buyer/views/car_order_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -51,7 +53,8 @@ class _CarListForOrderState extends State<CarListForOrder> {
                           Container(
                             height: 100.h,
                             width: 80.w,
-                            child: Image.asset("assets/car1.png"),
+                            child: Image.network(
+                                snapshot.data!.docs[index].get("url")),
                           ),
                           SizedBox(
                             width: 15.w,

@@ -25,7 +25,7 @@ class _CarOrderPageState extends State<CarOrderPage> {
       body: Column(
         children: [
           Container(
-            child: Image.asset("assets/car1.png"),
+            child: Image.network("${recievedData.get("url")}"),
           ),
           Container(
             margin: EdgeInsets.only(left: 30.w),
@@ -179,6 +179,7 @@ class _CarOrderPageState extends State<CarOrderPage> {
           "location": recievedData.get('location'),
           "seller_id": recievedData.get('userId'),
           "buyer_id": user.uid.toString(),
+          "url": recievedData.get("url"),
           "status": "aprove"
         });
 
